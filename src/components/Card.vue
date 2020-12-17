@@ -1,12 +1,14 @@
 <template>
     <div class="repository-card">
-        <img :src="image" alt="User's avatar" class="user-avatar"/>
+        <img :src="repo.owner.avatar_url" alt="User's avatar" class="user-avatar"/>
         <div class="repository-information">
-            <h3> Repository Name</h3>
-            <p> Repository Discription </p>
+            <h3> {{repo.name}}</h3>
+            
+            <p> {{repo.description}} </p>
+            
             <div class="bottom-ligne">
-                <chip :Text="chips.value1" />
-                <chip :Text="chips.value1" />
+                <chip Title="stars" :Text="repo.stargazers_count" />
+                <chip Title="Issues" :Text="repo.open_issues" />
                 <p>Time Interval by Owner Name</p>
             </div>
 
@@ -23,21 +25,7 @@ export default {
     components:{
         Chip
     },
-    data: function (){
-        return {
-            chips: {
-                value1: "ok",
-                value2: "ok1",
-            }, 
-            image: "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png"
-        };
-    },
-    created: function (){
-
-    }, 
-    methods: {
-
-    }, 
+    props: ["repo"],
 }
 </script>
 
@@ -48,9 +36,9 @@ export default {
     margin: 3em;
 
     & .user-avatar{
-        border-radius: .2em;
-        width: 7em;
-        height: 7em;
+        border-radius: .3em;
+        width: 9em;
+        height: 9em;
     }
 
     & .repository-information{
@@ -59,6 +47,9 @@ export default {
         flex-direction: column;
         text-align: left;
         line-height: .2em;
+        & p{
+            // padding: .2em 0em
+        }
         & .bottom-ligne{
             display: flex; 
             flex-direction: row;

@@ -1,14 +1,14 @@
 
 <template>
     <div class="chip">
-        <p class="text" > {{Text}} </p>
+        <p class="text" > <span class="titile">{{Title}}</span> : {{Text}} </p>
     </div>
 </template>
 
 <script>
 export default {
     name:"Chip", 
-    props:["Text"]
+    props:["Text", "Title"]
 
 }
 
@@ -22,6 +22,9 @@ export default {
     background: black;
     & .text{
         color: white;
+        & .title{
+
+        }
     }
 }
 </style>

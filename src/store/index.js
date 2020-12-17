@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    pagesCount: 0
+    pagesCount: 1
   },
   mutations: {
     increment (state) {
