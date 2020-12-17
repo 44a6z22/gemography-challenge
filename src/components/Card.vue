@@ -45,6 +45,7 @@ export default {
 .repository-card{
     display: flex;
     flex-direction: row;
+    margin: 3em;
 
     & .user-avatar{
         border-radius: .2em;
