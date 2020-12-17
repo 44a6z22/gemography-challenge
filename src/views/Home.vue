@@ -1,46 +1,50 @@
 <template>
   <div class="home">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <Paginator :PagesCount="this.$store.state.pagesCount" /> -->
-    <p v-if="isLoading"> Loading ... </p>
-    <Card v-else v-for="item in items" :key="item.id" :repo="item"/>
-
+    <p v-if="isLoading">Loading ...</p>
+    <Card v-else v-for="item in items" :key="item.id" :repo="item"  />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import GithubService from "../services/GithubService";
 import Card from "@/components/Card";
 import Paginator from "@/components/Paginator";
-import axios from "axios";
+import moment from "moment";
+
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    // HelloWorld
     Card,
-    Paginator
+    Paginator,
   },
   data: function () {
     return {
       isLoading: true,
-      items : []
-    }
+      items: [],
+      // differenceInDays:null 
+    };
   },
-  methods: {
-    get : function() {
-      axios.get("https://api.github.com/search/repositories?q=created:>2017-10-22&per_page=100&sort=stars&order=desc")
-        .then( response => {
-          this.items = [ ...this.items,  response.data.items]; 
-          this.isLoading = false;
-          console.log(this.items[0])
-        })
-        .catch( e => console.error(e));
-    },
-   
+ 
+  created: function () {
+    this.GithubService = new GithubService();
   },
-  created: function() {
-    this.get();
-  }
-}
+  
+  mounted: function () {
+
+    var aMonthAgoDate = moment().subtract(30, 'days').format("YYYY-MM-DD");
+
+    this.GithubService.getTopHundredRepositories(aMonthAgoDate)
+      .then((data) => {
+        this.items.push(...data.items) ;
+        this.isLoading = false;
+
+      });
+  },
+};
 </script>
+<style lang="scss" scoped>
+  .home{
+    width: 90%;
+    margin: auto;
+  }
+</style>
