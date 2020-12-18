@@ -22,6 +22,7 @@ export default {
   background: black;
   text-align: center;
   width: 100px;
+  
   & .text {
     color: white;
     & .title {

@@ -1,5 +1,9 @@
 <template>
-  <div class="repository-card" data-aos="slide-up">
+  <div class="repository-card" 
+      data-aos="fade-right"
+     data-aos-offset="300"
+     data-aos-easing="ease-in-sine">
+
     <div class="header">
       <img
         :src="repo.owner.avatar_url"
@@ -62,7 +66,7 @@ export default {
 .repository-card {
   display: flex;
   flex-direction: row;
-  margin: 3em;
+  // margin: 3em;
   padding: 2em;
 
   & .header {

@@ -28,6 +28,7 @@ export default {
       limit: 10,
       busy: false,
       posts: [],
+      recordPrePage: 30
       // differenceInDays:null
     };
   },
@@ -51,10 +52,12 @@ export default {
 
       this.GithubService.getTopHundredRepositories(
         aMonthAgoDate,
-        this.page
+        this.page,
+        this.recordPrePage
       ).then((data) => {
         this.items.push(...data.items);
         this.isLoading = false;
+        this.busy = false;
       });
     },
   },
