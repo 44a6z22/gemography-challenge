@@ -3,8 +3,6 @@
     <Spinner v-if="isLoading"></Spinner>
     <Card v-else v-for="item in items" :key="item.id" :repo="item" />
     <Spinner v-if="busy"/>
-
-    <div v-observe-visibility="visibilityChanged" ></div>
   </div>
 </template>
 
