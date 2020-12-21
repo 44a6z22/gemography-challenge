@@ -1,9 +1,8 @@
 <template>
-  <div class="repository-card" 
-      data-aos="fade-right"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine">
-
+  <div
+    class="repository-card"
+    data-aos="zoom-in-down"
+  >
     <div class="header">
       <img
         :src="repo.owner.avatar_url"

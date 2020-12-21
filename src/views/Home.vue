@@ -2,7 +2,9 @@
   <div>
     <Spinner v-if="isLoading"></Spinner>
     <Card v-else v-for="item in items" :key="item.id" :repo="item" />
-    <Spinner v-if="busy"></Spinner>
+    <Spinner v-if="busy"/>
+
+    <div v-observe-visibility="visibilityChanged" ></div>
   </div>
 </template>
 
@@ -28,7 +30,7 @@ export default {
       limit: 10,
       busy: false,
       posts: [],
-      recordPrePage: 30
+      recordPrePage: 30,
       // differenceInDays:null
     };
   },
@@ -38,18 +40,24 @@ export default {
     },
   },
   methods: {
+    visibilityChanged: function(isVisible){
+        console.log(isVisible);
+    },
+    //   the scroll handler to check when the user hits the bottom of the page
     handleScroll: function () {
-      if (
-        document.documentElement.scrollTop + window.innerHeight ===
-        document.documentElement.offsetHeight
-      ) {
-        this.page = this.page + 1;
-        this.busy = true;
+      if (document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight ) 
+      {
+        if(!this.busy){
+          this.page = this.page + 1;
+          this.busy = true;
+        }
       }
     },
     loadMore: function () {
-      var aMonthAgoDate = moment().subtract(30, "days").format("YYYY-MM-DD");
+      // get the date of a month ago
+      let aMonthAgoDate = moment().subtract(30, "days").format("YYYY-MM-DD");
 
+      // calling the service a the data recieved gets push to the end of the items array .
       this.GithubService.getTopHundredRepositories(
         aMonthAgoDate,
         this.page,
@@ -62,10 +70,15 @@ export default {
     },
   },
 
-  created: function () {
+  mounted: function () {
+    // intentiating the github service . 
     this.GithubService = new GithubService();
+
+    // adding a scroll event to check when the user hits the bottom of the page ;
     window.addEventListener("scroll", this.handleScroll);
-    this.loadMore();
+
+    // this gets called the first time to show the first result ont he page
+     this.loadMore();
   },
 };
 </script>
